@@ -92,7 +92,7 @@ client.on("message", function (msg) {
     const embed = new MessageEmbed()
       .setTitle("He is noob don't mention him")
       .setImage(
-        "https://media.tenor.com/MTtxDwRKF00AAAPo/maa-chod-denge-talking.mp4"
+        "https://c.tenor.com/MTtxDwRKF00AAAAC/maa-chod-denge-talking.gif"
       );
 
     msg.reply({ embeds: [embed] });
