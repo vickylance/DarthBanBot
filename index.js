@@ -90,9 +90,9 @@ client.on("message", function (msg) {
     findInMessage(msg, "DM", { caseSensitive: true, wholeWords: true })
   ) {
     const embed = new MessageEmbed()
-      .setTitle("He is noob don't be a noob and iska link maat bhej bsdk")
+      .setTitle("He is noob don't mention him")
       .setImage(
-        "https://media.discordapp.net/attachments/868756296004960290/978717649376792586/Dead_Game_No_Life.png"
+        "https://media.tenor.com/MTtxDwRKF00AAAPo/maa-chod-denge-talking.mp4"
       );
 
     msg.reply({ embeds: [embed] });
