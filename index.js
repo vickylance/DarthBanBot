@@ -90,7 +90,7 @@ client.on("message", function (msg) {
     findInMessage(msg, "DM", { caseSensitive: true, wholeWords: true })
   ) {
     const embed = new MessageEmbed()
-      .setTitle("He is noob don't mention him")
+      .setTitle("He is noob don't mention him DM recursion")
       .setImage(
         "https://media.tenor.com/MTtxDwRKF00AAAPo/maa-chod-denge-talking.mp4"
       );
