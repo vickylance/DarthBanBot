@@ -27,57 +27,43 @@ function findInMessage(message, target, options) {
   if (!target || !message) return null;
   let str = finalOptions.caseSensitive ? target : target.toLowerCase();
 
-  function check(obj, str) {
-    let checker = finalOptions.wholeWords ? "indexOf" : "includes";
-    if (
-      checker === "indexOf" &&
-      obj &&
-      new RegExp("\\b" + str + "\\b").test(obj)
-    ) {
+  function check(str, strToCheck) {
+    if (!str || !strToCheck) return false;
+
+    let { wholeWords, caseSensitive } = finalOptions;
+    if (!caseSensitive) {
+      strToCheck = strToCheck.toLowerCase();
+    }
+    if (wholeWords && new RegExp("\\b" + strToCheck + "\\b").test(str)) {
       return true;
     }
-    if (checker === "includes" && obj?.[checker](str)) {
+    if (!wholeWords && str.includes(strToCheck)) {
       return true;
     }
     return false;
   }
 
-  if (
-    (finalOptions.caseSensitive && check(message.content, str)) ||
-    (!finalOptions.caseSensitive && check(message.content?.toLowerCase(), str))
-  )
+  if (check(message.content, str)) {
     return true;
+  }
 
   for (let embed of message.embeds) {
-    console.log("title: ", embed.title);
     if (
-      (finalOptions.caseSensitive &&
-        ((finalOptions.author && check(embed.author?.name, str)) ||
-          (finalOptions.description && check(embed.description, str)) ||
-          (finalOptions.footer && check(embed.footer?.text, str)) ||
-          (finalOptions.title && check(embed.title, str)))) ||
-      (!finalOptions.caseSensitive &&
-        ((finalOptions.author &&
-          check(embed.author?.name?.toLowerCase(), str)) ||
-          (finalOptions.description &&
-            check(embed.description?.toLowerCase(), str)) ||
-          (finalOptions.footer &&
-            check(embed.footer?.text.toLowerCase(), str)) ||
-          (finalOptions.title && check(embed.title?.toLowerCase(), str))))
-    )
+      (finalOptions.author && check(embed.author?.name, str)) ||
+      (finalOptions.description && check(embed.description, str)) ||
+      (finalOptions.footer && check(embed.footer?.text, str)) ||
+      (finalOptions.title && check(embed.title, str))
+    ) {
       return true;
+    }
 
-    if (finalOptions.fields)
+    if (finalOptions.fields) {
       for (let field of embed.fields) {
-        if (
-          (finalOptions.caseSensitive &&
-            [field.name, field.value].includes(str)) ||
-          (!finalOptions.caseSensitive &&
-            [field.name.toLowerCase(), field.value.toLowerCase()].includes(str))
-        ) {
+        if (check(`${field.name} ${field.value}`, str)) {
           return true;
         }
       }
+    }
   }
 
   return false;
