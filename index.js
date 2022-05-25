@@ -87,7 +87,8 @@ client.on("message", function (msg) {
   if (
     findInMessage(msg, "darth micro") ||
     findInMessage(msg, "darthmicro") ||
-    findInMessage(msg, "DM", { caseSensitive: true, wholeWords: true })
+    findInMessage(msg, "DM", { caseSensitive: true, wholeWords: true }) ||
+    findInMessage(msg, "𝔻𝕄", { caseSensitive: true, wholeWords: true })
   ) {
     const embed = new MessageEmbed()
       .setTitle("He is noob don't mention him")
